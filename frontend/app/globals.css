@@ -1,0 +1,283 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  --color-primary: linear-gradient(
+    to bottom,
+    #f6d77a,
+    #e3b74f,
+    #c8952c
+  );
+
+  /* Add solid fallback color */
+  --primary-solid: #e3b74f;
+}
+
+html {
+    scroll-behavior: smooth;
+  }
+
+.bg-primary {
+  background: linear-gradient(to right, #FFD95A, #B8860B);
+}
+
+.text-primary {
+  background: linear-gradient(to right, #FFD95A, #B8860B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* .bg-primary {
+            background: linear-gradient(to right, #FFD95A, #B8860B);
+            color: white;
+            padding: 10px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        } */
+
+
+.btn-primary {
+            background: linear-gradient(to right, #FFD95A, #B8860B);
+            color: white;
+            padding: 10px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+
+
+/* ─── RICH TEXT CONTENT ─── */
+.rich-content h1 {
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #0F1C2E;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+  text-align: center;
+}
+.rich-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0F1C2E;
+  margin-top: 1.75rem;
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+.rich-content h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0F1C2E;
+  margin-top: 1.25rem;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Remove extra top margin when heading is first element */
+.rich-content h1:first-child,
+.rich-content h2:first-child,
+.rich-content h3:first-child {
+  margin-top: 0;
+}
+
+.rich-content p {
+  font-size: 1rem;
+  color: #4B5563;
+  line-height: 1.85;
+  margin-bottom: 0.85rem;
+}
+.rich-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Remove space when paragraph comes right after a heading */
+.rich-content h1 + p,
+.rich-content h2 + p,
+.rich-content h3 + p {
+  margin-top: 0;
+}
+
+.rich-content strong,
+.rich-content b {
+  font-weight: 700;
+  color: #0F1C2E;
+}
+.rich-content em,
+.rich-content i {
+  font-style: italic;
+}
+.rich-content u {
+  text-decoration: underline;
+}
+
+.rich-content ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.85rem;
+}
+.rich-content ul li {
+  padding-left: 0;
+  margin-bottom: 0.35rem;
+  line-height: 1.75;
+  color: #4B5563;
+  font-size: 0.95rem;
+}
+.rich-content ul li::before {
+  display: none;
+}
+
+.rich-content ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.85rem;
+}
+.rich-content ol li {
+  margin-bottom: 0.35rem;
+  line-height: 1.75;
+  color: #4B5563;
+  font-size: 0.95rem;
+}
+
+/* Remove space when list comes right after heading */
+.rich-content h1 + ul, .rich-content h1 + ol,
+.rich-content h2 + ul, .rich-content h2 + ol,
+.rich-content h3 + ul, .rich-content h3 + ol {
+  margin-top: 0.25rem;
+}
+
+.rich-content blockquote {
+  border-left: 4px solid #0F1C2E;
+  padding: 0.6rem 1rem;
+  font-style: italic;
+  color: #6B7280;
+  margin: 1rem 0;
+  background: #FFFBF5;
+  border-radius: 0 0.375rem 0.375rem 0;
+}
+
+.rich-content a {
+  color: #0F1C2E;
+  text-decoration: underline;
+}
+.rich-content a:hover {
+  opacity: 0.75;
+}
+
+.rich-content code {
+  background: #F3F4F6;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-family: monospace;
+}
+
+/* ─── Tiptap Editor ─── */
+.tiptap-editor .ProseMirror {
+  min-height: 300px;
+  padding: 1rem;
+  outline: none;
+}
+
+/* ─── Tiptap Table Styles ─── */
+.tiptap-editor .ProseMirror table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+.tiptap-editor .ProseMirror td,
+.tiptap-editor .ProseMirror th {
+  border: 1px solid #E5E7EB;
+  padding: 0.5rem 0.75rem;
+  min-width: 80px;
+  vertical-align: top;
+  position: relative;
+}
+.tiptap-editor .ProseMirror th {
+  background: #F9FAFB;
+  font-weight: 600;
+  color: #374151;
+}
+.tiptap-editor .ProseMirror .selectedCell::after {
+  background: rgba(99, 102, 241, 0.15);
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ─── Tiptap Image Styles ─── */
+.tiptap-editor .ProseMirror img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+.tiptap-editor .ProseMirror img.ProseMirror-selectednode {
+  border-color: #6366f1;
+}
+
+/* ─── rich-content Table (website rendering) ─── */
+.rich-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+.rich-content td,
+.rich-content th {
+  border: 1px solid #E5E7EB;
+  padding: 0.6rem 0.875rem;
+  text-align: left;
+  vertical-align: top;
+  color: #374151;
+}
+.rich-content th {
+  background: #F9FAFB;
+  font-weight: 600;
+  color: #0F1C2E;
+}
+.rich-content tr:nth-child(even) td {
+  background: #FAFAFA;
+}
+
+/* ─── rich-content Image (website rendering) ─── */
+.rich-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 0.75rem 0;
+}
