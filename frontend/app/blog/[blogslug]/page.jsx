@@ -1,7 +1,7 @@
 import BlogViewPage from "./BlogViewPage";
 
 export async function generateMetadata({ params }) {
-  const { blogslug } = params;
+  const { blogslug } = await params;
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/blogs/slug/${blogslug}`,
@@ -90,7 +90,7 @@ function generateJsonLd(blog) {
 }
 
 async function page({ params }) {
-  const { blogslug } = params;
+  const { blogslug } = await params;
   let error = null;
   let loading = true;
   const res = await fetch(

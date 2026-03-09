@@ -37,13 +37,15 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
     <section className="relative w-full h-[80vh] md:h-[100vh] flex items-center pt-20">
 
       {/* Background Image */}
-      <Image
-        src={mainImg}
-        alt={`${name}`}
-        fill
-        priority
-        className="object-cover"
-      />
+      {mainImg && (
+  <Image
+    src={mainImg}
+    alt={name || "Project Image"}
+    fill
+    priority
+    className="object-cover"
+  />
+)}
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#0f1c2e]/40 via-[#0f1c2e]/30 to-transparent"></div>

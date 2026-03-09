@@ -1,10 +1,10 @@
 import ProjectViewPage from "./ProjectViewPage";
 
 export async function generateMetadata({ params }) {
-  const slug = params.pSlug;
+  const {pSlug} = await params;
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/projects/slug/${slug}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/projects/slug/${pSlug}`,
     { cache: "no-store" }
   );
 
@@ -140,7 +140,7 @@ async function fetchProject(slug){
 }
 
 async function page({ params }) {
-  const slug = params.pSlug;
+  const {pSlug} = await params;
 
   let project = null;
   let error = null;
@@ -148,14 +148,13 @@ async function page({ params }) {
 
   try {
     loading = true;
-    project = await fetchProject(slug);
+    project = await fetchProject(pSlug);
     loading = false
   } catch (err) {
     error = err.message || "Something went wrong";
   } finally {
     loading = false;
   }
-
   return (
     <>
       {project && (

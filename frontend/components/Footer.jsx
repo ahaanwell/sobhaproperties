@@ -1,4 +1,3 @@
-"use client"
 import Link from "next/link";
 import {
   Phone,
@@ -12,19 +11,28 @@ import {
 } from "lucide-react";
 
 async function getProjects() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects`, {
-    cache: "no-store",
-  });
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects`, {
+      cache: "no-store",
+    });
 
-  const data = await res.json();
-  return data.data;
+    if (!res.ok) {
+      return [];
+    }
+
+    const data = await res.json();
+    return data?.data || [];
+  } catch (error) {
+    console.error("Footer project fetch error:", error);
+    return [];
+  }
 }
 
 export default async function Footer() {
   const projects = await getProjects();
+
   return (
     <footer className="bg-[#0f1c2e] text-gray-300 pt-14 pb-6">
-
       <div className="max-w-[1140px] mx-auto px-4 md:px-16 w-full">
 
         {/* Top Grid */}
@@ -32,15 +40,16 @@ export default async function Footer() {
 
           {/* About */}
           <div>
-          <Link
-          href="/"
-          className="flex flex-col justify-center text-white text-2xl font-semibold tracking-[4px] leading-none"
-        >
-          SOBHA
-          <span className="text-xs tracking-[3px] leading-none">
-            𝒫𝓇𝑜𝓅𝑒𝓇𝓉𝒾𝑒𝓈
-          </span>
-        </Link>
+            <Link
+              href="/"
+              className="flex flex-col text-white text-2xl font-semibold tracking-[4px] leading-none"
+            >
+              SOBHA
+              <span className="text-xs tracking-[3px] leading-none">
+                𝒫𝓇𝑜𝓅𝑒𝓇𝓉𝒾𝑒𝓈
+              </span>
+            </Link>
+
             <p className="text-sm leading-6 text-gray-400 mt-3">
               Sobha Realty is one of India’s most trusted real estate
               developers delivering premium residential projects with
@@ -53,13 +62,14 @@ export default async function Footer() {
             <h3 className="text-white text-lg font-semibold mb-4">
               Quick Links
             </h3>
+
             <ul className="space-y-2 text-sm">
-              <li><Link href="#">Home</Link></li>
+              <li><Link href="/">Home</Link></li>
               <li><Link href="/projects">Projects</Link></li>
-              <li><Link href="#">Locations</Link></li>
-              <li><Link href="#">Market Insights</Link></li>
-              <li><Link href="#">About Us</Link></li>
-              <li><Link href="#">Contact Us</Link></li>
+              <li><Link href="/locations">Locations</Link></li>
+              <li><Link href="/blogs">Market Insights</Link></li>
+              <li><Link href="/about">About Us</Link></li>
+              <li><Link href="/contact">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -68,15 +78,16 @@ export default async function Footer() {
             <h3 className="text-white text-lg font-semibold mb-4">
               Projects in Bangalore
             </h3>
+
             <ul className="space-y-2 text-sm">
-  {projects?.slice(0, 5).map((project) => (
-    <li key={project?._id}>
-      <Link href={`/${project?.slug}`}>
-        {project?.name}
-      </Link>
-    </li>
-  ))}
-</ul>
+              {projects?.slice(0, 5).map((project) => (
+                <li key={project?._id}>
+                  <Link href={`/projects/${project?.slug}`}>
+                    {project?.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Contact + Social */}
@@ -106,6 +117,7 @@ export default async function Footer() {
 
             {/* Social Media */}
             <div className="flex gap-3">
+
               <Link href="#" className="w-9 h-9 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition">
                 <Facebook size={16} />
               </Link>
@@ -125,19 +137,18 @@ export default async function Footer() {
               <Link href="#" className="w-9 h-9 bg-gray-800 hover:bg-blue-700 rounded-full flex items-center justify-center transition">
                 <Linkedin size={16} />
               </Link>
-            </div>
 
+            </div>
           </div>
 
         </div>
 
-        {/* Bottom Bar */}
+        {/* Bottom */}
         <div className="border-t border-gray-700 mt-10 pt-6 text-center text-sm text-gray-400">
           © {new Date().getFullYear()} Sobha Properties. All rights reserved.
         </div>
 
       </div>
-
     </footer>
   );
 }

@@ -7,14 +7,15 @@ import MarketInsights from "@/components/MarketInsights";
 import ProjectsByLocation from "@/components/ProjectsByLocation";
 import WhySobha from "@/components/WhySobha";
 
-
 async function getProjects() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects`, {
     cache: "no-store",
   });
 
+  if (!res.ok) return [];
+
   const data = await res.json();
-  return data.data;
+  return data?.data || [];
 }
 
 async function fetchBlogs() {
@@ -22,25 +23,34 @@ async function fetchBlogs() {
     cache: "no-store",
   });
 
+  if (!res.ok) return [];
+
   const data = await res.json();
-  return data.data;
+  return data?.data || [];
 }
 
-
 export default async function Home() {
-  const projects = await getProjects();
-  const blogs = await fetchBlogs();
+
+  const [projects, blogs] = await Promise.all([
+    getProjects(),
+    fetchBlogs()
+  ]);
+
   return (
     <MainLayout>
-    {/* <Header/> */}
-    <HeroSection/>
-    <FeaturedProjects projects={projects}/>
-    <ProjectsByLocation/>
-    <WhySobha/>
-    <Amenities/>
-    <MarketInsights blogsList={blogs}/>
-    <Disclaimer/>
-    {/* <Footer/> */}
+      <HeroSection />
+
+      <FeaturedProjects projects={projects} />
+
+      <ProjectsByLocation />
+
+      <WhySobha />
+
+      <Amenities />
+
+      <MarketInsights blogsList={blogs} />
+
+      <Disclaimer />
     </MainLayout>
   );
 }

@@ -17,6 +17,7 @@ import ProjectPageHeader from "@/components/ProjectPageHeader";
 // import { useDispatch, useSelector } from "react-redux";
 
 function ProjectViewPage({ projectData, loading, error }) {
+  // console.log("projectData", projectData)
   // const dispatch = useDispatch();
   // const { projectData, loading, error } = useSelector((state) => state.project);
   // useEffect(() => {

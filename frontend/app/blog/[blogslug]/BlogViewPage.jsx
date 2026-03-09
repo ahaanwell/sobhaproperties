@@ -1,4 +1,3 @@
-"use client";
 
 import LoadingSpinner from "@/components/LoadingSpinner";
 import MainLayout from "@/components/MainLayout";
