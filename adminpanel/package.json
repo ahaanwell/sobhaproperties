@@ -1,0 +1,41 @@
+{
+  "name": "sobha-admin",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.0.1",
+    "@tiptap/extension-color": "^2.1.13",
+    "@tiptap/extension-image": "^2.27.2",
+    "@tiptap/extension-link": "^2.1.13",
+    "@tiptap/extension-placeholder": "^2.1.13",
+    "@tiptap/extension-table": "^2.27.2",
+    "@tiptap/extension-table-cell": "^2.27.2",
+    "@tiptap/extension-table-header": "^2.27.2",
+    "@tiptap/extension-table-row": "^2.27.2",
+    "@tiptap/extension-text-align": "^2.1.13",
+    "@tiptap/extension-text-style": "^2.1.13",
+    "@tiptap/extension-underline": "^2.1.13",
+    "@tiptap/react": "^2.1.13",
+    "@tiptap/starter-kit": "^2.1.13",
+    "axios": "^1.6.2",
+    "lucide-react": "^0.263.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^9.0.4",
+    "react-router-dom": "^6.20.0",
+    "recharts": "^2.8.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.3",
+    "autoprefixer": "^10.4.15",
+    "postcss": "^8.4.29",
+    "tailwindcss": "^3.3.3",
+    "vite": "^4.4.5"
+  }
+}
