@@ -1,27 +1,34 @@
+import { cache } from "react";
 import ProjectViewPage from "./ProjectViewPage";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 // ==========================
-// Fetch Project
+// Fetch Project (Cached)
 // ==========================
-async function fetchProject(slug) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/projects/slug/${slug}`,
-    {
-      next: { revalidate: 300 }, // cache for 5 minutes
-    }
-  );
+const fetchProject = cache(async (slug) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/projects/slug/${slug}`,
+      {
+        next: { revalidate: 300 },
+      }
+    );
 
-  if (!res.ok) return null;
+    if (!res.ok) return null;
 
-  const data = await res.json();
-  return data?.data;
-}
+    const data = await res.json();
+    return data?.data;
+  } catch (error) {
+    console.error("Fetch Project Error:", error);
+    return null;
+  }
+});
 
 // ==========================
 // SEO Metadata
 // ==========================
 export async function generateMetadata({ params }) {
-  const {pSlug} = await params;
+  const { pSlug } = await params;
 
   const project = await fetchProject(pSlug);
 
@@ -39,9 +46,6 @@ export async function generateMetadata({ params }) {
   const ogTitle = meta?.ogTitle || title;
   const ogDescription = meta?.ogDescription || description;
   const ogImage = meta?.ogImage || project.mainImage || "";
-  const twitterTitle = meta?.twitterTitle || ogTitle;
-  const twitterDescription = meta?.twitterDescription || ogDescription;
-  const twitterImage = meta?.twitterImage || ogImage;
 
   const canonical =
     meta?.canonicalUrl ||
@@ -77,9 +81,9 @@ export async function generateMetadata({ params }) {
 
     twitter: {
       card: meta?.twitterCard || "summary_large_image",
-      title: twitterTitle,
-      description: twitterDescription,
-      images: twitterImage ? [twitterImage] : [],
+      title: ogTitle,
+      description: ogDescription,
+      images: ogImage ? [ogImage] : [],
     },
 
     robots: {
@@ -158,16 +162,22 @@ function generateJsonLd(project) {
 // Page Component
 // ==========================
 export default async function Page({ params }) {
-  const {pSlug} = await params;
+  const { pSlug } = await params;
 
   const project = await fetchProject(pSlug);
 
+  // Loading state
   if (!project) {
-    return <div className="p-10 text-center">Project Not Found</div>;
+    return (
+      <div className="flex justify-center items-center min-h-[300px]">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   return (
     <>
+      {/* JSON-LD Schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -175,6 +185,7 @@ export default async function Page({ params }) {
         }}
       />
 
+      {/* Project Page */}
       <ProjectViewPage projectData={project} />
     </>
   );

@@ -12,20 +12,8 @@ import ProjectFooter from "@/components/ProjectFooter";
 import ProjectHero from "@/components/ProjectHero";
 import ProjectOverview from "@/components/ProjectOverview";
 import ProjectPageHeader from "@/components/ProjectPageHeader";
-// import { fetchProjectBySlug } from "@/redux/slices/projectSlice";
-// import { useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
 
-function ProjectViewPage({ projectData, loading, error }) {
-  // console.log("projectData", projectData)
-  // const dispatch = useDispatch();
-  // const { projectData, loading, error } = useSelector((state) => state.project);
-  // useEffect(() => {
-  //   dispatch(fetchProjectBySlug(slug));
-  // }, [slug]);
-
-  if (loading) return <div className="min-h-[80vh] bg-white flex justify-center items-center"><LoadingSpinner/></div>;
-    if (error) return <div className="min-h-[50vh] bg-white text-gray-700"><p>Error: {error}</p></div>;
+function ProjectViewPage({ projectData}) {
 
   return (
     <>
