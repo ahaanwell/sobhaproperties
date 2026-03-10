@@ -1,10 +1,10 @@
-// "use client"
+
 import MainLayout from "@/components/MainLayout";
 import ProjectCard from "@/components/ProjectCard";
 
 async function fetchProjects() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects`, {
-    cache: "no-store",
+    next: { revalidate: 300 },
   });
 
   if (!res.ok) {

@@ -1,7 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/:project/images/:filename',
+        destination: 'https://darkblue-owl-129775.hostingersite.com/:project/images/:filename',
+      },
+    ]
+  },
   images: {
-    unoptimized: true, // ← disables Next.js image optimization
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "http",
@@ -16,7 +24,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "www.sobhaproperties.in",
+        hostname: "darkblue-owl-129775.hostingersite.com", // ← removed https://
         pathname: "/**",
       },
       {
