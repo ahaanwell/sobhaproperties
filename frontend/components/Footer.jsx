@@ -13,8 +13,8 @@ import {
 async function getProjects() {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects`, {
-      cache: "no-store",
-    });
+        next: { revalidate: 300 },
+      });
 
     if (!res.ok) {
       return [];

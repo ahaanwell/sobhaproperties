@@ -38,7 +38,7 @@ export default function HeroSection() {
   }, [current]);
 
   return (
-    <section className="relative w-full h-[90vh] md:h-[100vh] min-h-[500px] overflow-hidden">
+    <section className="relative w-full h-[80vh] md:h-[100vh] min-h-[500px] overflow-hidden">
 
       {/* ── Slider Track ──
           Key fix: track is position:relative (normal flow), fills the section.
@@ -125,7 +125,7 @@ export default function HeroSection() {
           >
             <Link
             href="/projects"
-              className="px-7 py-3 text-[11px] font-semibold tracking-[0.12em] uppercase text-white
+              className="px-7 text-center py-3 text-[11px] font-semibold tracking-[0.12em] uppercase text-white
                 bg-primary border-0 cursor-pointer
                 transition-all duration-300 hover:opacity-85 hover:-translate-y-px"
             >
