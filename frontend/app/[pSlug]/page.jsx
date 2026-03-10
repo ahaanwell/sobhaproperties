@@ -108,7 +108,7 @@ function generateJsonLd(project) {
     "@type": meta?.schemaType || "Apartment",
     name: project.name,
     description: meta?.description || project.moreAbout || "",
-    url: `${process.env.NEXT_PUBLIC_SITE_URL}/projects/${project.slug}`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}/projects/slug/${project.slug}`,
     image: project.mainImage || "",
 
     address: {
@@ -168,11 +168,7 @@ export default async function Page({ params }) {
 
   // Loading state
   if (!project) {
-    return (
-      <div className="flex justify-center items-center min-h-[300px]">
-        <LoadingSpinner />
-      </div>
-    );
+    return <div className="flex justify-center items-center h-screen"><h1 className="text-red-600 text-4xl">404</h1></div>
   }
 
   return (

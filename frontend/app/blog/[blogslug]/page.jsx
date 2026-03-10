@@ -1,15 +1,29 @@
+import { cache } from "react";
 import BlogViewPage from "./BlogViewPage";
 
+
+const fetchBlog = cache(async(slug)=>{
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/blogs/slug/${slug}`,
+      {
+        next: { revalidate: 300 },
+      }
+    );
+
+    if (!res.ok) return null;
+
+    const data = await res.json();
+    return data?.data;
+  } catch (error) {
+    console.error("Fetch Blog Error:", error);
+    return null;
+  }
+})
 export async function generateMetadata({ params }) {
   const { blogslug } = await params;
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/blogs/slug/${blogslug}`,
-    { cache: "no-store" }
-  );
-
-  const data = await res.json();
-  const blog = data?.data;
+  const blog = await fetchBlog(blogslug);
   const meta = blog?.metadata;
 
   if (!blog) {
@@ -27,7 +41,7 @@ export async function generateMetadata({ params }) {
   const twitterTitle = meta?.twitterTitle || ogTitle
   const twitterDescription = meta?.twitterDescription || ogDescription
   const twitterImage = meta?.twitterImage || ogImage
-  const canonical = meta?.canonicalUrl || `${process.env.NEXT_PUBLIC_SITE_URL}/blogs/${blog.slug}`
+  const canonical = meta?.canonicalUrl || `${process.env.NEXT_PUBLIC_SITE_URL}/blogs/slug/${blog.slug}`
 
   return {
     title,
@@ -91,16 +105,12 @@ function generateJsonLd(blog) {
 
 async function page({ params }) {
   const { blogslug } = await params;
-  let error = null;
-  let loading = true;
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/blogs/slug/${blogslug}`,
-    { cache: "no-store" }
-  );
-  const data = await res.json();
-  loading = false
-  const blog = data?.data;
 
+  const blog = await fetchBlog(blogslug);
+
+  if (!blog) {
+    return <div className="flex justify-center items-center h-screen"><h1 className="text-red-600 text-4xl">404</h1></div>
+  }
   return (
     <>
       {blog && (

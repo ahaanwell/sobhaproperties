@@ -1,25 +1,9 @@
 
 import LoadingSpinner from "@/components/LoadingSpinner";
 import MainLayout from "@/components/MainLayout";
-// import { fetchBlogBySlug } from "@/redux/slices/blogSlice";
 import Link from "next/link";
-// import { useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
 
-function BlogViewPage({ blogData, loading, error }) {
-  // const dispatch = useDispatch();
-  // const { blogData, loading, error } = useSelector((state) => state?.blog);
-
-
-  // useEffect(() => {
-  //   if (blogslug) {
-  //     dispatch(fetchBlogBySlug(blogslug));
-  //   }
-  // }, [blogslug, dispatch]);
-
-
-  if (loading) return <div className="min-h-[80vh] bg-white flex justify-center items-center"><LoadingSpinner/></div>;
-  if (error) return <div className="min-h-[50vh] bg-white text-gray-700"><p>Error: {error}</p></div>;
+function BlogViewPage({ blogData}) {
 
   return (
     <MainLayout>
