@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { FaDownload } from "react-icons/fa";
 import LeadModal from "./LeadModal";
-import { toLocalImage } from "@/utils/image";
 
 
 export default function ProjectHero({mainImg, name, location, basePrice, unitVariant, totalUnits, totalLandArea, totalTowers}) {
@@ -40,7 +39,7 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
       {/* Background Image */}
       {mainImg && (
   <Image
-    src={toLocalImage(mainImg)}
+    src={mainImg}
     alt={name || "Project Image"}
     fill
     priority

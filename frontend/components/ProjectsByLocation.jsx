@@ -4,7 +4,7 @@ import SectionHeading from "./SectionHeading";
 
 const locations = [
   { id: 1, name: "Bangalore", image: "/images/bangalore.jpg" },
-  { id: 2, name: "Chennai", image: "/images/Chennai.jpg" },
+  { id: 2, name: "Chennai", image: "/images/chennai.jpg" },
   { id: 3, name: "Hyderabad", image: "/images/hyderabad.jpg" },
   { id: 4, name: "Delhi NCR", image: "/images/delhi.jpg" },
   { id: 5, name: "Dubai", image: "/images/dubai.jpg" },
