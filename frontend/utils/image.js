@@ -1,6 +1,7 @@
 export const toLocalImage = (url) => {
   if (!url) return ''
 
+
   // Production — already on frontend domain, no change needed
   if (url.includes('sobhaproperties.vercel.app') || url.includes('sobhaproperties.in')) {
     return url
