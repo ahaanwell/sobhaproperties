@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Maximize2, Square, Download } from "lucide-react";
 import LeadModal from "./LeadModal";
+import { toLocalImage } from "@/utils/image";
 
 export default function FloorPlansSection({
   floorPlanContent,
@@ -78,7 +79,7 @@ export default function FloorPlansSection({
               <div className="md:w-2/5 h-48 md:h-auto relative">
                 {activePlan?.floorPlanImage && (
                   <img
-                    src={activePlan.floorPlanImage}
+                    src={toLocalImage(activePlan.floorPlanImage)}
                     alt={activePlan.unitType}
                     className="w-full h-full object-cover"
                   />

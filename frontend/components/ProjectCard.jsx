@@ -1,5 +1,4 @@
 "use client"
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import LeadModal from "./LeadModal";
@@ -14,12 +13,10 @@ function ProjectCard({ project }) {
     >
       {/* Image */}
       <div className="relative h-[180px] md:h-[200px]">
-        <Image
+        <img
           src={toLocalImage(project?.mainImage)}
           alt={project?.name}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-  className="object-cover"
+          className="w-full h-full object-cover"
         />
 
         {/* Badge */}
@@ -46,17 +43,15 @@ function ProjectCard({ project }) {
 
         {/* Buttons */}
         <div className="flex gap-3">
-          <Link 
-          href={`/${project?.slug}`}
-          prefetch
-          className="flex-1 border text-center cursor-pointer border-gray-300 py-2 rounded-3xl text-sm hover:bg-gray-100 transition">
+          <Link
+            href={`/${project?.slug}`}
+            prefetch
+            className="flex-1 border text-center cursor-pointer border-gray-300 py-2 rounded-3xl text-sm hover:bg-gray-100 transition">
             View Details
           </Link>
 
           <button
-          onClick={() => {
-                setOpenModal(true);
-              }}
+            onClick={() => setOpenModal(true)}
             className="flex-1 bg-primary text-white py-2 text-sm rounded-3xl font-medium cursor-pointer shadow-md"
           >
             Get Cost Sheet
@@ -64,12 +59,12 @@ function ProjectCard({ project }) {
         </div>
       </div>
       <LeadModal
-              isOpen={openModal}
-              projectName={project?.name}
-              modelHeading={"Download Cost Sheet"}
-              modelBtnLabel={"Download"}
-              onClose={() => setOpenModal(false)}
-            />
+        isOpen={openModal}
+        projectName={project?.name}
+        modelHeading={"Download Cost Sheet"}
+        modelBtnLabel={"Download"}
+        onClose={() => setOpenModal(false)}
+      />
     </div>
   );
 }

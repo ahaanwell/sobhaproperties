@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { X, ChevronLeft, ChevronRight, Camera } from "lucide-react";
+import { toLocalImage } from "@/utils/image";
 
 export default function GallerySection({ galleryImages }) {
   const [currentIndex, setCurrentIndex] = useState(null);
@@ -43,7 +44,7 @@ export default function GallerySection({ galleryImages }) {
               }`}
             >
               <img
-                src={image}
+                src={toLocalImage(image)}
                 alt="gallery"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -94,7 +95,7 @@ export default function GallerySection({ galleryImages }) {
             {/* Image */}
             <div className="relative max-w-6xl max-h-[85vh] px-4">
               <img
-                src={galleryImages[currentIndex]}
+                src={toLocalImage(galleryImages[currentIndex])}
                 alt="gallery"
                 className="w-full h-full object-contain rounded-lg"
               />

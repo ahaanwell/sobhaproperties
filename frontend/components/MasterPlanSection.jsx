@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Maximize2, Download, MapPin, Building, Trees, Car, Users } from "lucide-react";
+import { toLocalImage } from "@/utils/image";
 
 export default function MasterPlanSection({masterPlanContent, masterPlanImage}) {
 
@@ -22,7 +23,7 @@ export default function MasterPlanSection({masterPlanContent, masterPlanImage}) 
         {/* Master Plan Image Card */}
         <div className="w-full md:w-[50%] m-auto h-[300px] md:h-[400px] flex items-center justify-center">
               <img 
-                src={masterPlanImage || "/images/masterplan.webp"} 
+                src={toLocalImage(masterPlanImage)} 
                 alt="Master Plan"
                 className="w-full h-full object-cover rounded-2xl"
               />

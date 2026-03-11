@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: '/images/:path*',
-        destination: 'https://res.cloudinary.com/djdp6aloi/image/upload/:path*',
+        destination: 'https://res.cloudinary.com/dmz316wxm/image/upload/:path*',
       },
     ]
   },

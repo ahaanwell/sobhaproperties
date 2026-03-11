@@ -1,6 +1,7 @@
 
 import LoadingSpinner from "@/components/LoadingSpinner";
 import MainLayout from "@/components/MainLayout";
+import { toLocalImage } from "@/utils/image";
 import Link from "next/link";
 
 function BlogViewPage({ blogData}) {
@@ -37,7 +38,7 @@ function BlogViewPage({ blogData}) {
         </h1>
       <img 
       className="md:rounded mb-4"
-      src={blogData?.thumbnail} alt={blogData?.title} />
+      src={toLocalImage(blogData?.thumbnail)} alt={blogData?.title} />
       <div
   className="rich-content"
   dangerouslySetInnerHTML={{ __html: blogData?.content }}
