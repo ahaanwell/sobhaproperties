@@ -13,7 +13,6 @@ export default function FeaturedProjects({projects}) {
   const [selectedProject, setSelectedProject] = useState("");
 
   // const {projects} = useSelector((state)=>state.project);
-  console.log("projects", projects)
 
   const scrollRef = useRef(null);
 

@@ -1,6 +1,7 @@
 "use client";
 import AboutDeveloperSection from "@/components/AboutDeveloperSection";
 import AmenitiesSection from "@/components/AmenitiesGrid";
+import BrochureDownload from "@/components/BrochureDownload";
 import FAQSection from "@/components/FAQSection";
 import FloorPlansSection from "@/components/FloorPlansSection";
 import GallerySection from "@/components/GallerySection";
@@ -28,6 +29,7 @@ function ProjectViewPage({ projectData}) {
         totalLandArea={projectData?.totalLandArea}
         totalTowers={projectData?.totalTowers}
       />
+      <BrochureDownload topPosition={"top-105 md:top-80"} frmName={"Brochure"} projectName={projectData?.name}/>
       <div className="w-full md:w-[80%] px-4 md:px-0 m-auto">
         <ProjectOverview 
         overviewContent={projectData?.overviewContent}

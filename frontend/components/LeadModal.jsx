@@ -151,8 +151,8 @@ export default function LeadModal({
                 {fields.map(({ key, label, type, placeholder }) => (
                   <div key={key}>
                     <label
-                      className={`block text-[10px] font-semibold tracking-widest uppercase mb-1.5 transition-colors
-                        ${focused === key ? "text-primary" : "text-stone-400"}`}
+                      className={`block text-[11px] font-semibold tracking-widest uppercase mb-1.5 transition-colors
+                        ${focused === key ? "text-primary" : "text-stone-600"}`}
                     >
                       {label}
                     </label>
@@ -189,7 +189,7 @@ export default function LeadModal({
                           onChange={handleChange}
                           onFocus={() => setFocused(key)}
                           onBlur={() => setFocused(null)}
-                          className="flex-1 text-sm text-stone-800 placeholder-stone-300 bg-transparent
+                          className="flex-1 text-sm text-stone-800 placeholder-stone-500 bg-transparent
                             px-4 py-3 outline-none"
                         />
                       </div>
@@ -203,7 +203,7 @@ export default function LeadModal({
                         onChange={handleChange}
                         onFocus={() => setFocused(key)}
                         onBlur={() => setFocused(null)}
-                        className={`w-full text-sm text-stone-800 placeholder-stone-300 bg-stone-50
+                        className={`w-full text-sm text-stone-800 placeholder-stone-500 bg-stone-50
                           border rounded-sm px-4 py-3 outline-none transition-all duration-200
                           ${focused === key
                             ? "border-primary ring-2 ring-primary/10 bg-white"

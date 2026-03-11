@@ -34,7 +34,7 @@ export default function ProjectPageHeader({ projectName, projectSlug }) {
           {/* Logo */}
           <Link href={`/${projectSlug}`}>
             <img
-              className="w-[100px] h-[50px] object-contain"
+              className=" h-[50px] object-contain"
               src="/images/logo.webp"
               alt="Logo"
             />

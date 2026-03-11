@@ -52,7 +52,7 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
       <div className="absolute inset-0 bg-gradient-to-r from-[#0f1c2e]/40 via-[#0f1c2e]/30 to-transparent"></div>
 
       {/* Content Container */}
-      <div className="relative z-10 mx-auto px-4 md:px-20 w-full grid md:grid-cols-2 gap-10 items-center">
+      <div className="relative z-10 mx-auto px-6 md:px-20 w-full grid md:grid-cols-2 gap-10 items-center">
 
         {/* LEFT SIDE CONTENT */}
         <div className="text-white">
@@ -74,7 +74,7 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
           </p>
 
           {/* Buttons */}
-          <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex flex-col px-5 md:px-0 md:flex-row gap-4">
 
             <button className="
               px-8 py-3
@@ -190,7 +190,7 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
                 cursor-pointer
                   w-full
                   py-3
-                  rounded-mg
+                  rounded-lg
                   bg-primary
                   text-white
                   font-semibold
