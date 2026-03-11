@@ -1,5 +1,5 @@
 import Project from "../models/project.model.js";
-import { saveFile, deleteFile } from "../utils/saveFile.js";
+import { uploadFile, deleteFile } from "../utils/cloudinary.js";
 
 const safeParse = (data) => {
   if (!data) return [];
@@ -13,10 +13,11 @@ const safeParseObject = (data) => {
   try { return JSON.parse(data) } catch { return {} }
 }
 
-const buildFloorPlans = (floorPlansRaw, uploadedFiles = [], slug) => {
+const buildFloorPlans = async (floorPlansRaw, uploadedFiles = []) => {
   const floorPlans = safeParse(floorPlansRaw)
-  const uploadedUrls = uploadedFiles.map(file => saveFile(file, slug))
-
+  const uploadedUrls = await Promise.all(
+    uploadedFiles.map(file => uploadFile(file.buffer, 'sobha/floorplans'))
+  )
   return floorPlans.map((fp) => {
     const { _imageIndex, ...rest } = fp
     if (typeof _imageIndex === 'number' && _imageIndex >= 0 && uploadedUrls[_imageIndex]) {
@@ -46,35 +47,30 @@ export const addProject = async (req, res) => {
       })
     }
 
-    // Generate slug early so we can use it as folder name
-    const projectSlug = slug
-      ? slug.toLowerCase().replace(/[^a-z0-9-]/g, '-')
-      : name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
-
-    // Upload Main Image
     if (!req.files?.mainImage?.length) {
       return res.status(400).json({
         success: false,
         message: "Main image is required",
       })
     }
-    const mainImageUrl = saveFile(req.files.mainImage[0], projectSlug)
+
+    // Upload Main Image
+    const mainImageUrl = await uploadFile(req.files.mainImage[0].buffer, 'sobha/projects')
 
     // Master Plan Image
     const masterPlanImageUrl = req.files?.masterPlanImage?.length
-      ? saveFile(req.files.masterPlanImage[0], projectSlug)
+      ? await uploadFile(req.files.masterPlanImage[0].buffer, 'sobha/masterplans')
       : ''
 
     // Gallery Images
-    const galleryImages = (req.files?.gallery || []).map(file =>
-      saveFile(file, projectSlug)
+    const galleryImages = await Promise.all(
+      (req.files?.gallery || []).map(file => uploadFile(file.buffer, 'sobha/gallery'))
     )
 
     // Floor Plans
-    const floorPlans = buildFloorPlans(
+    const floorPlans = await buildFloorPlans(
       req.body.floorPlans,
       req.files?.floorPlanImages || [],
-      projectSlug
     )
 
     // Metadata
@@ -194,9 +190,6 @@ export const updateProject = async (req, res) => {
       return res.status(404).json({ success: false, message: "Project not found" })
     }
 
-    // Use existing slug as folder name (keep images in same folder)
-    const projectSlug = project.slug
-
     const { metadata, floorPlans, pricePlans, faqList, ...rest } = req.body
 
     const updateData = {
@@ -214,28 +207,29 @@ export const updateProject = async (req, res) => {
 
     // Floor plans
     if (floorPlans) {
-      updateData.floorPlans = buildFloorPlans(
+      updateData.floorPlans = await buildFloorPlans(
         floorPlans,
         req.files?.floorPlanImages || [],
-        projectSlug
       )
     }
 
     // New main image
     if (req.files?.mainImage?.length > 0) {
-      deleteFile(project.mainImage)
-      updateData.mainImage = saveFile(req.files.mainImage[0], projectSlug)
+      await deleteFile(project.mainImage)
+      updateData.mainImage = await uploadFile(req.files.mainImage[0].buffer, 'sobha/projects')
     }
 
     // New master plan image
     if (req.files?.masterPlanImage?.length > 0) {
-      deleteFile(project.masterPlanImage)
-      updateData.masterPlanImage = saveFile(req.files.masterPlanImage[0], projectSlug)
+      await deleteFile(project.masterPlanImage)
+      updateData.masterPlanImage = await uploadFile(req.files.masterPlanImage[0].buffer, 'sobha/masterplans')
     }
 
     // Append new gallery images
     if (req.files?.gallery?.length > 0) {
-      const newGallery = req.files.gallery.map(file => saveFile(file, projectSlug))
+      const newGallery = await Promise.all(
+        req.files.gallery.map(file => uploadFile(file.buffer, 'sobha/gallery'))
+      )
       updateData.gallery = [...(project.gallery || []), ...newGallery]
     }
 
@@ -265,23 +259,11 @@ export const deleteProject = async (req, res) => {
       return res.status(404).json({ success: false, message: "Project not found" })
     }
 
-    // Delete all images
-    deleteFile(project.mainImage)
-    deleteFile(project.masterPlanImage)
-    for (const img of project.gallery || []) deleteFile(img)
-    for (const fp of project.floorPlans || []) {
-      if (fp.floorPlanImage) deleteFile(fp.floorPlanImage)
-    }
-
-    // Also delete the entire project folder
-    try {
-      const folderPath = path.join(process.cwd(), 'public', project.slug)
-      if (fs.existsSync(folderPath)) {
-        fs.rmSync(folderPath, { recursive: true, force: true })
-      }
-    } catch (err) {
-      console.error('Folder delete error:', err)
-    }
+    // Delete all images from Cloudinary
+    await deleteFile(project.mainImage)
+    await deleteFile(project.masterPlanImage)
+    await Promise.all((project.gallery || []).map(img => deleteFile(img)))
+    await Promise.all((project.floorPlans || []).map(fp => fp.floorPlanImage ? deleteFile(fp.floorPlanImage) : null))
 
     await Project.findByIdAndDelete(req.params.id)
     return res.status(200).json({ success: true, message: "Project deleted successfully" })
@@ -321,7 +303,7 @@ export const deleteGalleryImage = async (req, res) => {
     if (!project) {
       return res.status(404).json({ success: false, message: "Project not found" })
     }
-    deleteFile(imageUrl)
+    await deleteFile(imageUrl)
     project.gallery = project.gallery.filter(img => img !== imageUrl)
     await project.save()
     return res.status(200).json({

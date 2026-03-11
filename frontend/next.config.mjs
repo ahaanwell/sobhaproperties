@@ -3,8 +3,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/:project/images/:filename',
-        destination: 'https://darkblue-owl-129775.hostingersite.com/:project/images/:filename',
+        source: '/images/:path*',
+        destination: 'https://res.cloudinary.com/djdp6aloi/image/upload/:path*',
       },
     ]
   },
@@ -18,22 +18,17 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "sobhaproperties.vercel.app",
         pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "www.sobhaproperties.in",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "darkblue-owl-129775.hostingersite.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
         pathname: "/**",
       },
     ],
