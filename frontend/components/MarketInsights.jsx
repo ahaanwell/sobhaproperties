@@ -5,19 +5,9 @@ import SectionHeading from "./SectionHeading";
 import BlogCard from "./BlogCard";
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { fetchBlogs } from "@/redux/slices/blogSlice";
 
 export default function MarketInsights({blogsList}) {
-  // const dispatch = useDispatch();
   const scrollRef = useRef(null);
-  // const {blogsList} = useSelector((state)=>state.blog);
-  // console.log("blogsList", blogsList);
-
-  // useEffect(()=>{
-  //   dispatch(fetchBlogs())
-  // }, []);
-
 
   // scroll left
   const scrollLeft = () => {

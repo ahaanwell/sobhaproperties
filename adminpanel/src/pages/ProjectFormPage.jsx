@@ -463,7 +463,7 @@ export default function ProjectFormPage() {
                                 onChange={e => setFloorPlans(p => p.map((x, j) => j === i ? { ...x, unitType: e.target.value } : x))} />
                               <Input label="Price *" placeholder="e.g. ₹80L" value={fp.price}
                                 onChange={e => setFloorPlans(p => p.map((x, j) => j === i ? { ...x, price: e.target.value } : x))} />
-                              <Input label="Area (sqft) *" placeholder="e.g. 1200" type="number" value={fp.area}
+                              <Input label="Area (sqft) *" placeholder="e.g. 1200" value={fp.area}
                                 onChange={e => setFloorPlans(p => p.map((x, j) => j === i ? { ...x, area: e.target.value } : x))} />
                             </div>
                           </div>

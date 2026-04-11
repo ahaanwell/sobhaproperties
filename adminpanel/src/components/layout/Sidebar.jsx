@@ -6,12 +6,17 @@ import {
   LayoutDashboard, Building2, Users, User, LogOut,
   ChevronRight, X, Shield,
   FileText
-} from 'lucide-react'
+} from 'lucide-react';
+import { MdLeaderboard } from "react-icons/md";
+import { FaTasks } from "react-icons/fa";
+
 
 const NAV_ITEMS = [
   { label: 'Dashboard', path: '/', icon: LayoutDashboard },
   { label: 'Projects', path: '/projects', icon: Building2 },
   { label: 'Blogs', path: '/blogs', icon: FileText },
+  { label: 'Leads', path: '/leads', icon: MdLeaderboard },
+  { label: 'Tasks', path: '/tasks', icon: FaTasks },
   { label: 'Admins', path: '/admins', icon: Users, superAdminOnly: true },
   { label: 'Profile', path: '/profile', icon: User },
 ]

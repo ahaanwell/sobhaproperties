@@ -15,8 +15,7 @@ import {
   Bold, Italic, Underline as UnderlineIcon, List, ListOrdered,
   AlignLeft, AlignCenter, AlignRight, Link as LinkIcon,
   Heading1, Heading2, Heading3, Quote, Undo, Redo, Code,
-  Table as TableIcon, ImageIcon, Trash2, Plus, Minus,
-  ChevronDown
+  Table as TableIcon, ImageIcon, ChevronDown
 } from 'lucide-react'
 
 function ToolbarBtn({ onClick, active, title, children, danger }) {
@@ -38,7 +37,7 @@ function Divider() {
 
 // ── Image Modal ────────────────────────────────────────────
 function ImageModal({ onClose, onInsert }) {
-  const [tab, setTab] = useState('url') // 'url' | 'upload'
+  const [tab, setTab] = useState('url')
   const [url, setUrl] = useState('')
   const [alt, setAlt] = useState('')
   const fileRef = useRef()
@@ -63,8 +62,6 @@ function ImageModal({ onClose, onInsert }) {
           <h3 className="font-semibold text-gray-800">Insert Image</h3>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl leading-none">×</button>
         </div>
-
-        {/* Tabs */}
         <div className="flex gap-1 mb-4 bg-gray-100 rounded-xl p-1">
           {['url', 'upload'].map(t => (
             <button key={t} onClick={() => setTab(t)}
@@ -73,27 +70,19 @@ function ImageModal({ onClose, onInsert }) {
             </button>
           ))}
         </div>
-
         {tab === 'url' ? (
           <div className="space-y-3">
             <div>
               <label className="text-xs font-medium text-gray-600 mb-1 block">Image URL *</label>
-              <input
-                autoFocus
-                value={url}
-                onChange={e => setUrl(e.target.value)}
+              <input autoFocus value={url} onChange={e => setUrl(e.target.value)}
                 placeholder="https://example.com/image.jpg"
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
-              />
+                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500" />
             </div>
             <div>
               <label className="text-xs font-medium text-gray-600 mb-1 block">Alt Text (optional)</label>
-              <input
-                value={alt}
-                onChange={e => setAlt(e.target.value)}
+              <input value={alt} onChange={e => setAlt(e.target.value)}
                 placeholder="Image description..."
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
-              />
+                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500" />
             </div>
             <button onClick={handleUrl}
               className="w-full bg-primary-600 text-white py-2 rounded-xl text-sm font-medium hover:bg-primary-700 transition-colors">
@@ -111,6 +100,52 @@ function ImageModal({ onClose, onInsert }) {
             </button>
           </div>
         )}
+      </div>
+    </div>
+  )
+}
+
+// ── Link Modal ─────────────────────────────────────────────
+function LinkModal({ onClose, onInsert, currentUrl }) {
+  const [url, setUrl] = useState(currentUrl || '')
+  const [openInNewTab, setOpenInNewTab] = useState(true)
+
+  const handleInsert = () => {
+    if (!url.trim()) return
+    onInsert({ url: url.trim(), openInNewTab })
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-5" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold text-gray-800">Insert Link</h3>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl leading-none">×</button>
+        </div>
+        <div className="space-y-3">
+          <div>
+            <label className="text-xs font-medium text-gray-600 mb-1 block">URL *</label>
+            <input autoFocus value={url} onChange={e => setUrl(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleInsert()}
+              placeholder="https://example.com"
+              className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500" />
+          </div>
+          <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+            <input type="checkbox" checked={openInNewTab}
+              onChange={e => setOpenInNewTab(e.target.checked)} className="rounded" />
+            Open in new tab
+          </label>
+          <div className="flex gap-2">
+            <button onClick={onClose}
+              className="flex-1 border border-gray-200 text-gray-600 py-2 rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors">
+              Cancel
+            </button>
+            <button onClick={handleInsert}
+              className="flex-1 bg-primary-600 text-white py-2 rounded-xl text-sm font-medium hover:bg-primary-700 transition-colors">
+              Insert Link
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -148,6 +183,7 @@ function TableMenu({ editor, onClose }) {
 // ── Main Editor ────────────────────────────────────────────
 export default function RichTextEditor({ value, onChange, placeholder = 'Start writing...' }) {
   const [showImageModal, setShowImageModal] = useState(false)
+  const [showLinkModal, setShowLinkModal] = useState(false)
   const [showTableMenu, setShowTableMenu] = useState(false)
 
   const editor = useEditor({
@@ -178,9 +214,17 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Start w
 
   if (!editor) return null
 
-  const addLink = () => {
-    const url = window.prompt('Enter URL:')
-    if (url) editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+  const handleInsertLink = ({ url, openInNewTab }) => {
+    editor.chain().focus().extendMarkRange('link').setLink({
+      href: url,
+      target: openInNewTab ? '_blank' : null,
+      rel: openInNewTab ? 'noopener noreferrer' : null,
+    }).run()
+    setShowLinkModal(false)
+  }
+
+  const handleRemoveLink = () => {
+    editor.chain().focus().unsetLink().run()
   }
 
   const insertImage = ({ src, alt }) => {
@@ -188,10 +232,19 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Start w
     setShowImageModal(false)
   }
 
+  const currentLinkUrl = editor.getAttributes('link').href || ''
+
   return (
     <>
       {showImageModal && (
         <ImageModal onClose={() => setShowImageModal(false)} onInsert={insertImage} />
+      )}
+      {showLinkModal && (
+        <LinkModal
+          onClose={() => setShowLinkModal(false)}
+          onInsert={handleInsertLink}
+          currentUrl={currentLinkUrl}
+        />
       )}
 
       <div className="tiptap-editor border border-gray-200 rounded-xl overflow-hidden bg-white hover:border-gray-300 focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-transparent transition-all">
@@ -229,10 +282,26 @@ export default function RichTextEditor({ value, onChange, placeholder = 'Start w
           <Divider />
 
           {/* Link */}
-          <ToolbarBtn onClick={addLink} active={editor.isActive('link')} title="Add Link"><LinkIcon size={15} /></ToolbarBtn>
+          <ToolbarBtn
+            onClick={() => setShowLinkModal(true)}
+            active={editor.isActive('link')}
+            title="Add Link">
+            <LinkIcon size={15} />
+          </ToolbarBtn>
+          {editor.isActive('link') && (
+            <ToolbarBtn onClick={handleRemoveLink} title="Remove Link" danger>
+              <span className="relative inline-flex items-center justify-center w-4 h-4">
+                <LinkIcon size={15} />
+                <span className="absolute inset-0 flex items-center justify-center">
+                  <span className="block w-5 h-px bg-red-500 rotate-45 rounded-full" />
+                </span>
+              </span>
+            </ToolbarBtn>
+          )}
 
           {/* Image */}
           <ToolbarBtn onClick={() => setShowImageModal(true)} title="Insert Image"><ImageIcon size={15} /></ToolbarBtn>
+          <Divider />
 
           {/* Table dropdown */}
           <div className="relative">

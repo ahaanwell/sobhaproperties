@@ -28,7 +28,6 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(form);
   };
 
 

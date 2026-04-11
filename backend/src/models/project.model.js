@@ -6,7 +6,7 @@ const floorPlanSchema = new Schema(
     floorPlanImage: { type: String },
     unitType: { type: String, required: true, trim: true },
     price: { type: String, required: true },
-    area: { type: Number, required: true },
+    area: { type: String, required: true },
   },
   { _id: false }
 );

@@ -22,6 +22,8 @@ export default function FloorPlansSection({
     }
   }, [floorPlans]);
 
+  console.log("floorPlans", floorPlans);
+
   const activePlan = floorPlans[activeTab];
 
   if (!floorPlans.length) {
