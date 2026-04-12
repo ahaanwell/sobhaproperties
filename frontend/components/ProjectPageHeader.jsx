@@ -32,7 +32,7 @@ export default function ProjectPageHeader({ projectName, projectSlug }) {
       >
         <div className="w-full mx-auto px-6 md:px-16 py-2 flex items-center justify-between">
           {/* Logo */}
-          <Link href={`/${projectSlug}`}>
+          <Link href={`/bangalore/${projectSlug}`}>
             <img
               className=" h-[50px] object-contain"
               src="/images/logo.webp"

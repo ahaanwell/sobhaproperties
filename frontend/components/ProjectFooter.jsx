@@ -51,7 +51,7 @@ export default function ProjectFooter() {
 
       {/* Bottom */}
       <div className="border-t border-gray-800 text-center text-sm text-gray-400 py-4">
-        © {new Date().getFullYear()} Your Company Name. All Rights Reserved.
+        © {new Date().getFullYear()} Sobha Properties. All Rights Reserved.
       </div>
 
     </footer>

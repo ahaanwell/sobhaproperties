@@ -66,10 +66,10 @@ export default async function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/">Home</Link></li>
               <li><Link href="/projects">Projects</Link></li>
-              <li><Link href="/locations">Locations</Link></li>
-              <li><Link href="/blogs">Market Insights</Link></li>
-              <li><Link href="/about">About Us</Link></li>
-              <li><Link href="/contact">Contact Us</Link></li>
+              <li><Link href="#">Locations</Link></li>
+              <li><Link href="#">Market Insights</Link></li>
+              <li><Link href="#">About Us</Link></li>
+              <li><Link href="#">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -105,7 +105,7 @@ export default async function Footer() {
 
               <div className="flex items-center gap-2">
                 <Phone size={16} className="text-gray-400" />
-                <p>+91 98765 13131</p>
+                <p>+91 9380660766</p>
               </div>
 
               <div className="flex items-center gap-2">

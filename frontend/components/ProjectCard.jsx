@@ -44,7 +44,7 @@ function ProjectCard({ project }) {
         {/* Buttons */}
         <div className="flex gap-3">
           <Link
-            href={`/${project?.slug}`}
+            href={`/bangalore/${project?.slug}`}
             prefetch
             className="flex-1 border text-center cursor-pointer border-gray-300 py-2 rounded-3xl text-sm hover:bg-gray-100 transition">
             View Details
