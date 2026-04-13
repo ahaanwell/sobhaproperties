@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Sobha Limited | Residential Projects In Bangalore, Chennai, Hyderabad, Delhi NCR and Dubai",
-  description: "Sobha Limited, a trusted real estate developer in Bangalore, Chennai, Hyderabad, Delhi NCR and Dubai known for innovative residential projects. Explore Lavish Homes's Suites now!",
+  title: "Sobha Properties | Residential Projects In Bangalore, Chennai, Hyderabad, Delhi NCR and Dubai",
+  description: "Sobha Properties, a trusted real estate developer in Bangalore, Chennai, Hyderabad, Delhi NCR and Dubai known for innovative residential projects. Explore Lavish Homes's Suites now!",
 };
 
 export default function RootLayout({ children }) {
