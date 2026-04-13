@@ -39,7 +39,7 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
       {/* Background Image */}
       {mainImg && (
   <Image
-    src={toLocalImage(mainImg)}
+    src={toLocalImage(mainImg || "")}
     alt={name || "Project Image"}
     fill
     priority
@@ -122,10 +122,18 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
               <p className="text-4xl font-bold text-yellow-500">{totalLandArea}</p>
               <p>Area</p>
             </div>
-            <div>
+            {
+              totalTowers ? (
+                <div>
               <p className="text-4xl font-bold text-yellow-500">{totalTowers}</p>
               <p>Towers</p>
             </div>
+
+              )
+              :
+              null
+            }
+          
           </div>
 
         </div>

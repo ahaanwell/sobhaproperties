@@ -22,11 +22,13 @@ export default function MasterPlanSection({masterPlanContent, masterPlanImage}) 
         )}
         {/* Master Plan Image Card */}
         <div className="w-full md:w-[50%] m-auto h-[300px] md:h-[400px] flex items-center justify-center">
-              <img 
-                src={toLocalImage(masterPlanImage)} 
-                alt="Master Plan"
-                className="w-full h-full object-cover rounded-2xl"
-              />
+              {masterPlanImage && (
+  <img
+    src={toLocalImage(masterPlanImage)}
+    alt="Master Plan"
+    className="w-full h-full object-cover rounded-2xl"
+  />
+)}
             </div>
         {/* Download Button */}
         <div className="text-center mt-8">

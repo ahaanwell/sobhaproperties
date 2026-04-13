@@ -3,7 +3,7 @@ import React from "react";
 import { MapPin, Download, Maximize2, Navigation, Car, Train, Plane, ShoppingBag, Hospital } from "lucide-react";
 
 export default function LocationMapSection({locationContent, mapLink}) {
-  const map = mapLink || "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d124435.74503022125!2d77.674833!3d12.932318!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae13752e34e92f%3A0xc2b234a66f986aae!2sBellandur%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1767174512692!5m2!1sen!2sin";
+  const map = mapLink;
   return (
     <section className="pt-10" id="location">
       <div className="">

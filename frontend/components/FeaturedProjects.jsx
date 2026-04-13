@@ -64,15 +64,13 @@ export default function FeaturedProjects({projects}) {
             className="flex gap-2 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide"
           >
             {projects.map((project) => (
-              <div
-                key={project._id}
-                className="snap-start shrink-0 w-[290px] md:w-[330px]"
-              >
-                <ProjectCard
-                  project={project}
-                  onOpen={() => handleOpen(project.name)}
-                />
-              </div>
+              
+                project?.isActive ? (
+                <div key={project._id} className="snap-start">
+                  <ProjectCard project={project} onLeadClick={handleOpen} />
+                </div>
+              ): null
+            
             ))}
           </div>
 
