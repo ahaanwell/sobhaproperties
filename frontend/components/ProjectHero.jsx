@@ -11,11 +11,13 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
   const [openModal, setOpenModal] = useState(false);
   const [modelHeading, setModelHeading] = useState("");
   const [modelBtnLabel, setModelBtnLabel] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({
     name: "",
     email: "",
-    phone: "",
-    whatsapp: true,
+    phone: ""
   });
 
   const handleChange = (e) => {
@@ -26,8 +28,40 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    const payload = {
+      name: form.name,
+      email: form.email,
+      phone: form.phone,
+      company_email: "info@searchmyspace.in",
+      project_name: name || "General Enquiry",
+    };
+
+    try {
+      const res = await fetch("https://smtpwithexcel.vercel.app/send-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error("Failed to send");
+      setSubmitted(true);
+      alert("Thank You! Our team will reach out to you within 24 hours.")
+      setForm({
+          name: "",
+          email: "",
+          phone: "",
+        });
+      // setTimeout(() => { onClose(); setSubmitted(false); }, 2500);
+    } catch (err) {
+      setError("Something went wrong. Please try again or call us directly.");
+    } finally {
+      setLoading(false);
+    }
   };
 
 
@@ -154,6 +188,7 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
                 name="name"
                 placeholder="Your Name"
                 onChange={handleChange}
+                value={form.name}
                 required
                 className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-[#c8952c]"
               />
@@ -163,6 +198,7 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
                 name="email"
                 placeholder="Email ID"
                 onChange={handleChange}
+                value={form.email}
                 required
                 className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-[#c8952c]"
               />
@@ -172,6 +208,7 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
                 name="phone"
                 placeholder="Phone Number"
                 onChange={handleChange}
+                value={form.phone}
                 required
                 className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-[#c8952c]"
               />
@@ -182,8 +219,8 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
                 <input
                   type="checkbox"
                   name="whatsapp"
-                  checked={form.whatsapp}
-                  onChange={handleChange}
+                  // checked={form.whatsapp}
+                  // onChange={handleChange}
                 />
 
                 Receive updates via Whatsapp
@@ -205,7 +242,7 @@ export default function ProjectHero({mainImg, name, location, basePrice, unitVar
                   transition
                 "
               >
-                Submit
+                {loading ? "Submiting..." : "Submit"}
               </button>
 
               {/* Disclaimer */}

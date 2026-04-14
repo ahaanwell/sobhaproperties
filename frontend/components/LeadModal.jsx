@@ -10,8 +10,8 @@ export default function LeadModal({
   modelHeading = "Enquire Now",
   modelBtnLabel = "Submit Enquiry",
 }) {
-  const companyEmail = "ahaanwell@gmail.com";
-  const contactNumber = "919999999999"; 
+  const companyEmail = "info@searchmyspace.in";
+  const contactNumber = "+919380660766"; 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
