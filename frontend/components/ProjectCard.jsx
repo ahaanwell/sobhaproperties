@@ -9,7 +9,7 @@ function ProjectCard({ project }) {
   return (
     <div
       key={project?._id}
-      className="bg-white shadow-md overflow-hidden hover:shadow-lg transition"
+      className="bg-white shadow-md overflow-hidden hover:shadow-lg transition min-w-[340px]"
     >
       {/* Image */}
       <div className="relative h-[180px] md:h-[200px]">
