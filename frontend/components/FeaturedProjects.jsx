@@ -12,8 +12,6 @@ export default function FeaturedProjects({projects}) {
   const [openModal, setOpenModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState("");
 
-  // const {projects} = useSelector((state)=>state.project);
-
   const scrollRef = useRef(null);
 
   const handleOpen = (project) => {

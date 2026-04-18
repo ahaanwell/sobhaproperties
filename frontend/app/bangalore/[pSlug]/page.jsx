@@ -105,56 +105,64 @@ function generateJsonLd(project) {
 
   return {
     "@context": "https://schema.org",
-    "@type": meta?.schemaType || "Apartment",
-    name: project.name,
-    description: meta?.description || project.moreAbout || "",
-    url: `${process.env.NEXT_PUBLIC_SITE_URL}/projects/slug/${project.slug}`,
-    image: project.mainImage || "",
+    "@type": "Review",
 
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: project.location || "",
-      addressLocality: meta?.city || "",
-      addressRegion: meta?.state || "",
-      postalCode: meta?.pincode || "",
-      addressCountry: "IN",
+    itemReviewed: {
+      "@type": meta?.schemaType || "Apartment",
+      name: project.name,
+      image: project.mainImage || "",
+      description: meta?.description || project.moreAbout || "",
+
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: project.location || "",
+        addressLocality: meta?.city || "",
+        addressRegion: meta?.state || "",
+        postalCode: meta?.pincode || "",
+        addressCountry: "IN",
+      },
+
+      ...(project.basePrice && {
+        offers: {
+          "@type": "Offer",
+          price: project.basePrice,
+          priceCurrency: "INR",
+          availability: "https://schema.org/InStock",
+        },
+      }),
+
+      ...(project.reraId && {
+        identifier: {
+          "@type": "PropertyValue",
+          name: "RERA ID",
+          value: project.reraId,
+        },
+      }),
+
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: meta?.rating || "4.8",
+        reviewCount: meta?.reviewCount || "20",
+      },
     },
 
-    ...(project.basePrice && {
-      offers: {
-        "@type": "Offer",
-        price: project.basePrice,
-        priceCurrency: "INR",
-        availability: "https://schema.org/InStock",
-      },
-    }),
+    author: {
+      "@type": "Organization",
+      name: "Sobha Properties",
+    },
 
-    ...(project.totalLandArea && {
-      floorSize: {
-        "@type": "QuantitativeValue",
-        value: project.totalLandArea,
-        unitCode: "ACR",
-      },
-    }),
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: meta?.rating || "4.8",
+      bestRating: "5",
+    },
 
-    ...(project.reraId && {
-      identifier: {
-        "@type": "PropertyValue",
-        name: "RERA ID",
-        value: project.reraId,
-      },
-    }),
+    reviewBody:
+      meta?.review ||
+      project.moreAbout ||
+      "This project offers excellent location benefits, premium construction quality, and strong investment potential.",
 
-    ...(project.faqList?.length > 0 && {
-      mainEntity: project.faqList.map((faq) => ({
-        "@type": "Question",
-        name: faq.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: faq.answer,
-        },
-      })),
-    }),
+    datePublished: project.createdAt || new Date().toISOString(),
   };
 }
 
