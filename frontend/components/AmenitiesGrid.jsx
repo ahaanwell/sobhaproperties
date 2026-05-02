@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import {
   Home,
@@ -81,19 +80,6 @@ export default function AmenitiesSection() {
               </div>
             );
           })}
-        </div>
-
-        {/* Simple CTA for Brokers */}
-        <div className="text-center mt-8">
-          <button className="inline-flex items-center px-6 py-2.5 bg-primary border-3 border-white  text-white text-sm font-semibold rounded-lg hover:bg-blue-800 transition-colors duration-300 shadow-sm">
-            Download Brochure
-            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-          </button>
-          <p className="text-xs text-gray-400 mt-3">
-            * All amenities are available for residents
-          </p>
         </div>
       </div>
     </section>

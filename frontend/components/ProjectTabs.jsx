@@ -18,7 +18,7 @@ export default function ProjectTabs() {
   const [active, setActive] = useState("Overview");
 
   return (
-    <section className="w-full bg-[#f5f5f5] border-b border-gray-300 sticky top-15 z-50">
+    <section className="w-full bg-[#f5f5f5] border-b border-gray-300 sticky top-15 z-40">
 
       <div className="">
 

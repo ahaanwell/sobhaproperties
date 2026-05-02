@@ -1,7 +1,3 @@
-"use client";
-import React from "react";
-import { Building2 } from "lucide-react";
-
 export default function AboutDeveloperSection({moreAboutProject}) {
   return (
     <section className="pt-10">
@@ -19,7 +15,7 @@ export default function AboutDeveloperSection({moreAboutProject}) {
             {moreAboutProject && (
           <div
             className="rich-content"
-            dangerouslySetInnerHTML={{ __html: moreAboutProject }}
+            dangerouslySetInnerHTML={{ __html: moreAboutProject || "" }}
           />
         )}
           </div>

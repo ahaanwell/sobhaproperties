@@ -1,4 +1,3 @@
-"use client";
 import AboutDeveloperSection from "@/components/AboutDeveloperSection";
 import AmenitiesSection from "@/components/AmenitiesGrid";
 import BrochureDownload from "@/components/BrochureDownload";

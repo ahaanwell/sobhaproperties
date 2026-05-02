@@ -1,6 +1,3 @@
-"use client";
-import React from "react";
-import { MapPin, Download, Maximize2, Navigation, Car, Train, Plane, ShoppingBag, Hospital } from "lucide-react";
 
 export default function LocationMapSection({locationContent, mapLink}) {
   const map = mapLink;
@@ -17,7 +14,7 @@ export default function LocationMapSection({locationContent, mapLink}) {
         {locationContent && (
           <div
             className="rich-content"
-            dangerouslySetInnerHTML={{ __html: locationContent }}
+            dangerouslySetInnerHTML={{ __html: locationContent || "" }}
           />
         )}
 
@@ -33,14 +30,6 @@ export default function LocationMapSection({locationContent, mapLink}) {
                                 </iframe>
             </div>
           </div>
-        </div>
-
-        {/* Mobile Download Button */}
-        <div className="lg:hidden text-center mt-6">
-          <button className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl transition-colors shadow-md">
-            <Download className="w-4 h-4" />
-            <span className="text-sm font-medium">Download Location Guide</span>
-          </button>
         </div>
       </div>
     </section>

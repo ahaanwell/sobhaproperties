@@ -36,12 +36,12 @@ export default function BrochureDownload({topPosition, frmName, projectName}) {
       name,
       email,
       number,
-      company_email: "ahaanwell@gmail.com",
+      company_email: "info@searchmyspace.in",
       project_name: projectName,
     };
 
     try {
-      const res = await fetch("https://smtp-server-sepia.vercel.app/send-email", {
+      const res = await fetch("https://worldcity.online/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

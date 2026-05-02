@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   Phone,
   Mail,
@@ -40,7 +39,7 @@ export default async function Footer() {
 
           {/* About */}
           <div>
-            <Link
+            <a
               href="/"
               className="flex flex-col text-white text-2xl font-semibold tracking-[4px] leading-none"
             >
@@ -48,7 +47,7 @@ export default async function Footer() {
               <span className="text-xs tracking-[3px] leading-none">
                 𝒫𝓇𝑜𝓅𝑒𝓇𝓉𝒾𝑒𝓈
               </span>
-            </Link>
+            </a>
 
             <p className="text-sm leading-6 text-gray-400 mt-3">
               Sobha Realty is one of India’s most trusted real estate
@@ -57,19 +56,18 @@ export default async function Footer() {
             </p>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="text-white text-lg font-semibold mb-4">
               Quick Links
             </h3>
 
             <ul className="space-y-2 text-sm">
-              <li><Link href="/">Home</Link></li>
-              <li><Link href="/projects">Projects</Link></li>
-              <li><Link href="#">Locations</Link></li>
-              <li><Link href="#">Market Insights</Link></li>
-              <li><Link href="#">About Us</Link></li>
-              <li><Link href="#">Contact Us</Link></li>
+              <li><a href="/">Home</a></li>
+              <li><a href="/projects">Projects</a></li>
+              <li><a href="#">Locations</a></li>
+              <li><a href="#">Market Insights</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Contact Us</a></li>
             </ul>
           </div>
 
@@ -82,9 +80,9 @@ export default async function Footer() {
             <ul className="space-y-2 text-sm">
               {projects?.slice(0, 5).map((project) => (
                 <li key={project?._id}>
-                  <Link href={`/projects/${project?.slug}`}>
+                  <a href={`/bangalore/${project?.slug}`}>
                     {project?.name}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -118,25 +116,25 @@ export default async function Footer() {
             {/* Social Media */}
             <div className="flex gap-3">
 
-              <Link href="#" className="w-9 h-9 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition">
+              <a href="#" className="w-9 h-9 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition">
                 <Facebook size={16} />
-              </Link>
+              </a>
 
-              <Link href="#" className="w-9 h-9 bg-gray-800 hover:bg-pink-600 rounded-full flex items-center justify-center transition">
+              <a href="#" className="w-9 h-9 bg-gray-800 hover:bg-pink-600 rounded-full flex items-center justify-center transition">
                 <Instagram size={16} />
-              </Link>
+              </a>
 
-              <Link href="#" className="w-9 h-9 bg-gray-800 hover:bg-sky-500 rounded-full flex items-center justify-center transition">
+              <a href="#" className="w-9 h-9 bg-gray-800 hover:bg-sky-500 rounded-full flex items-center justify-center transition">
                 <Twitter size={16} />
-              </Link>
+              </a>
 
-              <Link href="#" className="w-9 h-9 bg-gray-800 hover:bg-red-600 rounded-full flex items-center justify-center transition">
+              <a href="#" className="w-9 h-9 bg-gray-800 hover:bg-red-600 rounded-full flex items-center justify-center transition">
                 <Youtube size={16} />
-              </Link>
+              </a>
 
-              <Link href="#" className="w-9 h-9 bg-gray-800 hover:bg-blue-700 rounded-full flex items-center justify-center transition">
-                <Linkedin size={16} />
-              </Link>
+              <a href="#" className="w-9 h-9 bg-gray-800 hover:bg-blue-700 rounded-full flex items-center justify-center transition">
+                <aedin size={16} />
+              </a>
 
             </div>
           </div>

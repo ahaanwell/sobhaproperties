@@ -1,6 +1,3 @@
-"use client";
-import React, { useState } from "react";
-import { Maximize2, Download, MapPin, Building, Trees, Car, Users } from "lucide-react";
 import { toLocalImage } from "@/utils/image";
 
 export default function MasterPlanSection({masterPlanContent, masterPlanImage}) {
@@ -17,7 +14,7 @@ export default function MasterPlanSection({masterPlanContent, masterPlanImage}) 
         {masterPlanContent && (
           <div
             className="rich-content"
-            dangerouslySetInnerHTML={{ __html: masterPlanContent }}
+            dangerouslySetInnerHTML={{ __html: masterPlanContent || "" }}
           />
         )}
         {/* Master Plan Image Card */}
@@ -30,16 +27,6 @@ export default function MasterPlanSection({masterPlanContent, masterPlanImage}) 
   />
 )}
             </div>
-        {/* Download Button */}
-        <div className="text-center mt-8">
-          <button className="inline-flex items-center px-6 py-2.5 border-2 border-white bg-primary text-white text-sm font-semibold rounded-lg hover:bg-blue-800 transition-colors duration-300 shadow-sm">
-            <Download className="w-4 h-4 mr-2" />
-            Download Master Plan
-          </button>
-          <p className="text-xs text-gray-400 mt-3">
-            * High-resolution master plan available for download
-          </p>
-        </div>
       </div>
     </section>
   );

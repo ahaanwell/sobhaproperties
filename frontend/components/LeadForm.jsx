@@ -1,155 +1,138 @@
 "use client";
 import React, { useState } from "react";
-import { User, Phone, Mail, Send, CheckCircle } from "lucide-react";
 
-export default function LeadForm() {
-  const [formData, setFormData] = useState({
+export default function LeadForm({projectName}) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [form, setForm] = useState({
     name: "",
-    phone: "",
-    email: ""
+    email: "",
+    phone: ""
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setForm({
+      ...form,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    
-    setTimeout(() => {
-      setIsLoading(false);
-      setIsSubmitted(true);
-      setFormData({ name: "", phone: "", email: "" });
-      setTimeout(() => setIsSubmitted(false), 5000);
-    }, 1500);
+    setLoading(true);
+    setError("");
+
+    const payload = {
+      name: form.name,
+      email: form.email,
+      number: form.phone,
+      company_email: "info@searchmyspace.in",
+      project_name: `Sobhaproperties: ${projectName}` || "General Enquiry",
+    };
+
+    try {
+      const res = await fetch("https://worldcity.online/send-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("Failed to send");
+      alert("Thank You! Our team will reach out to you within 24 hours.")
+      setForm({
+          name: "",
+          email: "",
+          phone: "",
+        });
+      setSubmitted(true);
+    } catch (err) {
+      setError("Something went wrong. Please try again or call us directly.");
+    } finally {
+      setLoading(false);
+    }
   };
-
   return (
-     <div className="sticky top-10 z-40 pt-12">
+     <div className="md:flex justify-center md:justify-end hidden">
 
-        {/* Lead Form Card */}
-        <div className="bg-white rounded-xl shadow-md overflow-hidden mx-auto">
-          {/* Form Header */}
-          <div className="bg-white px-6 py-4">
-            <h3 className="text-primary font-semibold text-lg text-center">Sobha Hoskote</h3>
-            <p className="text-primary text-sm mt-1 text-center">Get best prices & exclusive offers</p>
+          <div className="bg-white w-full max-w-[400px] rounded-2xl shadow-2xl p-6">
+
+            <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+              Book Your Visit
+            </h3>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                onChange={handleChange}
+                value={form.name}
+                required
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-[#c8952c]"
+              />
+
+              <input
+                type="email"
+                name="email"
+                placeholder="Email ID"
+                onChange={handleChange}
+                value={form.email}
+                required
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-[#c8952c]"
+              />
+
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone Number"
+                onChange={handleChange}
+                value={form.phone}
+                required
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-[#c8952c]"
+              />
+
+              {/* Checkbox */}
+              <label className="flex items-center gap-2 text-sm text-gray-600">
+
+                <input
+                  type="checkbox"
+                  name="whatsapp"
+                  // checked={form.whatsapp}
+                  // onChange={handleChange}
+                />
+
+                Receive updates via Whatsapp
+
+              </label>
+
+              {/* Button */}
+              <button
+                type="submit"
+                className="
+                cursor-pointer
+                  w-full
+                  py-3
+                  rounded-lg
+                  bg-primary
+                  text-white
+                  font-semibold
+                  hover:bg-[#c8952c]
+                  transition
+                "
+              >
+                {loading ? "Submiting..." : "Submit"}
+              </button>
+
+              {/* Disclaimer */}
+              <p className="text-xs text-gray-500 text-center mt-2">
+                This enquiry is to book site visit and get best price.
+              </p>
+
+            </form>
+
           </div>
 
-          {/* Form Body */}
-          <div className="p-6">
-            {isSubmitted ? (
-              <div className="text-center py-8">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="w-8 h-8 text-green-600" />
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Thank You!</h4>
-                <p className="text-sm text-gray-600 mb-4">
-                  Our team will contact you shortly with the best offers.
-                </p>
-                <button
-                  onClick={() => setIsSubmitted(false)}
-                  className="text-blue-900 text-sm font-medium hover:underline"
-                >
-                  Submit another response
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Full Name <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <User className="h-4 w-4 text-gray-400" />
-                    </div>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      placeholder="Enter your full name"
-                      className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-900 focus:border-blue-900 text-sm"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Phone Number <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Phone className="h-4 w-4 text-gray-400" />
-                    </div>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      required
-                      placeholder="10-digit mobile number"
-                      pattern="[0-9]{10}"
-                      maxLength="10"
-                      className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-900 focus:border-blue-900 text-sm"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email ID <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Mail className="h-4 w-4 text-gray-400" />
-                    </div>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      placeholder="Enter your email address"
-                      className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-900 focus:border-blue-900 text-sm"
-                    />
-                  </div>
-                </div>
-
-                <p className="text-xs text-gray-500 mt-2">
-                  By submitting, you agree to receive calls, WhatsApp messages, and SMS about this project.
-                </p>
-
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full bg-primary hover:bg-primary border-2 border-white text-white font-semibold py-2.5 px-4 rounded transition-colors shadow-md flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed mt-4"
-                >
-                  {isLoading ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      Submitting...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4" />
-                      Get Best Offers
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
-          </div>
         </div>
-
-        <p className="text-xs text-gray-400 text-center mt-4">
-          * Our team will contact you within 30 minutes
-        </p>
-      </div>
   );
 }

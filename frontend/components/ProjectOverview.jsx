@@ -1,4 +1,3 @@
-"use client";
 import {
   FaRegIdCard,
   FaLayerGroup,
@@ -23,7 +22,9 @@ export default function ProjectOverview({
       <div className="">
         <div
   className="rich-content"
-  dangerouslySetInnerHTML={{ __html: overviewContent }}
+  dangerouslySetInnerHTML={{
+    __html: overviewContent || "",
+  }}
 />
       </div>
 

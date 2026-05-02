@@ -1,11 +1,7 @@
-"use client"
-import Link from "next/link";
-import { useState } from "react";
-import LeadModal from "./LeadModal";
 import { toLocalImage } from "@/utils/image";
+import GetCostSheetBtn from "./GetCostSheetBtn";
 
 function ProjectCard({ project }) {
-  const [openModal, setOpenModal] = useState(false);
   return (
     <div
       key={project?._id}
@@ -43,28 +39,14 @@ function ProjectCard({ project }) {
 
         {/* Buttons */}
         <div className="flex gap-3">
-          <Link
+          <a
             href={`/bangalore/${project?.slug}`}
-            prefetch
             className="flex-1 border text-center cursor-pointer border-gray-300 py-2 rounded-3xl text-sm hover:bg-gray-100 transition">
             View Details
-          </Link>
-
-          <button
-            onClick={() => setOpenModal(true)}
-            className="flex-1 bg-primary text-white py-2 text-sm rounded-3xl font-medium cursor-pointer shadow-md"
-          >
-            Get Cost Sheet
-          </button>
+          </a>
+          <GetCostSheetBtn projectName={project?.name} />
         </div>
       </div>
-      <LeadModal
-        isOpen={openModal}
-        projectName={project?.name}
-        modelHeading={"Download Cost Sheet"}
-        modelBtnLabel={"Download"}
-        onClose={() => setOpenModal(false)}
-      />
     </div>
   );
 }

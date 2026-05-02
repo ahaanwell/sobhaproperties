@@ -11,7 +11,7 @@ export default function LeadModal({
   modelBtnLabel = "Submit Enquiry",
 }) {
   const companyEmail = "info@searchmyspace.in";
-  const contactNumber = "+919380660766"; 
+  const contactNumber = "+918317452005"; 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -49,14 +49,14 @@ export default function LeadModal({
     const payload = {
       name: formData.name,
       email: formData.email,
-      phone: formData.phone,
+      number: formData.phone,
       country_code: formData.countryCode,
       company_email: companyEmail,
-      project_name: projectName || "General Enquiry",
+      project_name: `Sobhaproperties: ${projectName}` || "General Enquiry",
     };
 
     try {
-      const res = await fetch("https://smtpwithexcel.vercel.app/send-lead", {
+      const res = await fetch("https://worldcity.online/send-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -91,7 +91,7 @@ export default function LeadModal({
     <div
       ref={overlayRef}
       onClick={(e) => e.target === overlayRef.current && onClose()}
-      className={`fixed inset-0 z-[999] flex items-center justify-center px-4
+      className={`fixed inset-0 z-50 flex items-center justify-center px-4
         transition-all duration-300
         ${animIn ? "bg-black/70 backdrop-blur-sm" : "bg-transparent backdrop-blur-none"}`}
     >

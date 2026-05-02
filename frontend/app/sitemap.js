@@ -1,25 +1,31 @@
+export const revalidate = 60; // refresh every 60 seconds (near instant + safe)
+
 export default async function sitemap() {
-  const baseUrl = "https://www.sobhaproperties.in"; // ✅ FIXED (remove /api/v1)
+  const baseUrl = "https://www.sobhaproperties.in";
 
   let projects = [];
   let blogs = [];
 
   try {
-    const projectsRes = await fetch("https://api.sobhaproperties.in/api/v1/projects", {
-      cache: "no-store",
-    });
-
-    const blogsRes = await fetch("https://api.sobhaproperties.in/api/v1/blogs", {
-      cache: "no-store",
-    });
+    const [projectsRes, blogsRes] = await Promise.all([
+      fetch("https://api.sobhaproperties.in/api/v1/projects", {
+        next: { revalidate: 60 },
+      }),
+      fetch("https://api.sobhaproperties.in/api/v1/blogs", {
+        next: { revalidate: 60 },
+      }),
+    ]);
 
     const projectsData = await projectsRes.json();
     const blogsData = await blogsRes.json();
 
-    // ✅ FIX: Extract array safely
-    projects = Array.isArray(projectsData) ? projectsData : projectsData.data || [];
-    blogs = Array.isArray(blogsData) ? blogsData : blogsData.data || [];
+    projects = Array.isArray(projectsData)
+      ? projectsData
+      : projectsData?.data || [];
 
+    blogs = Array.isArray(blogsData)
+      ? blogsData
+      : blogsData?.data || [];
   } catch (error) {
     console.error("Sitemap fetch error:", error);
   }
@@ -33,7 +39,7 @@ export default async function sitemap() {
     lastModified: new Date(),
   }));
 
-  // Dynamic project pages
+  // Project pages
   const projectRoutes = projects.map((project) => ({
     url: `${baseUrl}/bangalore/${project.slug}`,
     lastModified: project.updatedAt
@@ -41,7 +47,7 @@ export default async function sitemap() {
       : new Date(),
   }));
 
-  // Dynamic blog pages
+  // Blog pages
   const blogRoutes = blogs.map((blog) => ({
     url: `${baseUrl}/blog/${blog.slug}`,
     lastModified: blog.updatedAt
