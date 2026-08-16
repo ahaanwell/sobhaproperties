@@ -1,6 +1,6 @@
 <?php
 
-define('API_BASE', 'https://api.sobhaproperties.in/api/v1');
+define('API_BASE', 'https://api.sobhaproperties.in');
 
 function api_get(string $path): ?array
 {
