@@ -7,6 +7,6 @@ RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} !^www\.sobhaproperties\.in$ [NC]
 RewriteRule ^ https://www.sobhaproperties.in%{REQUEST_URI} [L,R=301]
 
-RewriteRule ^bangalore/([a-zA-Z0-9-]+)\.html$ project.php?slug=$1 [L,QSA,NC]
+RewriteRule ^bangalore/([a-zA-Z0-9-]+)$ project.php?slug=$1 [L,QSA,NC]
 RewriteRule ^robots\.txt$ robots.php [L]
 RewriteRule ^sitemap\.xml$ sitemap.php [L]

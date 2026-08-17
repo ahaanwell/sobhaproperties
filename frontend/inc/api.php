@@ -55,7 +55,7 @@ function e(?string $value): string
 
 function project_url(array $project): string
 {
-    return '/bangalore/' . rawurlencode($project['slug'] ?? '') . '.html';
+    return '/bangalore/' . rawurlencode($project['slug'] ?? '');
 }
 
 function truncate_text(string $text, int $length): string

@@ -4,7 +4,7 @@
 
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
-if (preg_match('#^/bangalore/([a-zA-Z0-9-]+)\.html$#', $uri, $m)) {
+if (preg_match('#^/bangalore/([a-zA-Z0-9-]+)$#', $uri, $m)) {
     $_GET['slug'] = $m[1];
     require __DIR__ . '/project.php';
     return true;
